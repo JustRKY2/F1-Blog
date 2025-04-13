@@ -1,0 +1,50 @@
+#background{
+    background-image: url("img/background.png");
+    background-size: 100%;
+    margin-left: 200px;
+    margin-right: 200px;
+    border-radius: 7pt;
+    padding: 40px;
+    color: white;
+    display: flex;
+   
+    margin-bottom: 15%;
+    box-shadow: -7px 15px 20px black;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        
+        transform:scale(1.01);
+        box-shadow: -7px 15px 20px black;
+      }
+}
+#h1div{
+    background-color: rgb(36, 36, 36);
+    width: 250px;
+    height: 250px;
+    border-radius: 7pt;
+    color: rgb(255, 255, 255);
+    box-shadow: -2px 2px 2px rgb(0, 0, 0);
+    align-content: center;
+}
+h1{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#contentdiv{
+    width: 70%;
+    margin-left: 10%;
+    margin-top: 1%;
+}
+
+#body{
+    padding-top: 15%;
+    background-image: url(img/bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center; 
+    height: 100vh; 
+    margin: 0;
+}

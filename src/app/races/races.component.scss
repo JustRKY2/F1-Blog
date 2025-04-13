@@ -1,0 +1,57 @@
+#body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #0d0d0d;
+    color: #ffffff;
+    padding: 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+
+  }
+
+  h1 {
+    margin-top: 90px;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .track-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .track-card {
+    background: #1e1e1e;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+  }
+
+  .track-card:hover {
+    transform: scale(1.05);
+  }
+
+  .track-image {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    filter: brightness(0.9);
+  }
+
+  .track-info h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: #e10600;
+  }
+
+  .track-info p {
+    margin: 0.3rem 0;
+    color: #ccc;
+  }

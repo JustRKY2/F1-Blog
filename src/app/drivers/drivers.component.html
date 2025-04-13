@@ -1,0 +1,14 @@
+<div id="body">
+  <h1>Forma 1 Pilótak</h1>
+
+<div id="content">
+<div *ngFor="let driver of drivers" class="driver-card">
+  <img [src]="driver.imageUrl" alt="{{driver.name}}" class="driver-image" />
+  
+  <h3>{{ driver.name }}</h3>
+  <p>Ország: {{ driver.country }}</p>
+  <p>Csapat: {{ driver.team }}</p>
+  <p>Születési dátum: {{ driver.birthDate | birthdateFormat }}</p>
+</div>
+</div>
+</div>

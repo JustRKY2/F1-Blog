@@ -1,0 +1,26 @@
+<div id="body">
+    
+        <div class="teams-container">
+            <h1>Csapatok</h1>
+            <h2>Pirossal jelölve az 1970 előtti csapatok</h2>
+
+            <div class="team-card" *ngFor="let team of teams">
+              <div class="team-image-wrapper">
+                <img [src]="team.imageUrl" [alt]="team.name + ' logo'" class="team-image">
+              </div>
+              <div class="team-content">
+                <h2 class="team-name" [appFoundedHighlight]="team.founded">
+                  {{ team.name }} ({{ team.founded }})
+                </h2>
+                <div class="team-info">
+                  <p><strong>Ország:</strong> <span [appCountryFlag]="team.country">{{ team.country }}</span></p>
+                  <p><strong>Alapítva:</strong> {{ team.founded }}</p>
+                  <p><strong>Csapatfőnök:</strong> {{ team.teamPrincipal }}</p>
+                  <p><strong>Központ:</strong> {{ team.headquarters }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+      
+        </div>
