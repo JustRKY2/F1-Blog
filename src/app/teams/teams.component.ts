@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CountryFlagDirective } from '../directives/country-flag.directive';
 import { FoundedHighlightDirective } from '../directives/founded-highlight.directive';
+import { TeamHoverColorDirective } from '../directives/team-hover-color.directive';
+import { TextSizeDirective } from '../directives/text-size-directive.directive';
 
 export interface Team {
   id: number;              // Egyedi azonosító
@@ -16,7 +18,7 @@ export interface Team {
 
 @Component({
   selector: 'app-teams',
-  imports: [CommonModule,CountryFlagDirective,FoundedHighlightDirective],
+  imports: [CommonModule,CountryFlagDirective,FoundedHighlightDirective,TeamHoverColorDirective,TextSizeDirective],
   templateUrl: './teams.component.html',
   styleUrl: './teams.component.scss'
 })
