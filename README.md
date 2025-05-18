@@ -1,3 +1,7 @@
+# F1Blog weboldal az alábbi linken
+
+https://f1-blog-38b82.web.app/home
+
 # F1Blog
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
