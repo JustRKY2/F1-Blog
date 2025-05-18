@@ -1,14 +1,20 @@
 <div id="body">
   <h1>Forma 1 Pilótak</h1>
 
-<div id="content">
-<div *ngFor="let driver of drivers" class="driver-card">
-  <img [src]="driver.imageUrl" alt="{{driver.name}}" class="driver-image" />
-  
-  <h3>{{ driver.name }}</h3>
-  <p>Ország: {{ driver.country }}</p>
-  <p>Csapat: {{ driver.team }}</p>
-  <p>Születési dátum: {{ driver.birthDate | birthdateFormat }}</p>
-</div>
-</div>
+  <div style="margin-bottom: 16px;">
+    <button (click)="loadAllDrivers()">Összes pilóta</button>
+    <button (click)="loadDutchDrivers()">Holland pilóták</button>
+    <button (click)="loadOrderedByBirthDate()">Rendezés születési dátum szerint</button>
+    <button (click)="loadLimitedDrivers()">1 pilóta (limit)</button>
+  </div>
+
+  <div id="content">
+    <div *ngFor="let driver of drivers" class="driver-card">
+      <img [src]="driver.imageUrl" alt="{{driver.name}}" class="driver-image" />
+      <h3>{{ driver.name }}</h3>
+      <p>Ország: {{ driver.country }}</p>
+      <p>Csapat: {{ driver.team }}</p>
+      <p>Születési dátum: {{ driver.birthDate |  birthdateFormat }}</p>
+    </div>
+  </div>
 </div>

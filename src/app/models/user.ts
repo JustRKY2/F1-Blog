@@ -1,4 +1,5 @@
-export interface User {
+export interface user {
+  id: string;
     name: {
       firstname: string;
       lastname: string;

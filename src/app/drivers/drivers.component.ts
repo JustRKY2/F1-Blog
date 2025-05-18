@@ -1,54 +1,74 @@
-import { Component } from '@angular/core';
-import { BirthdateFormatPipe } from '../pipes/birthdate-format.pipe';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DriverService } from '../services/driver.service';
+import { Driver } from '../models/driver';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-
-export interface Driver {
-  id: number; // Egyedi azonosító
-  name: string; // Név
-  country: string; // Ország
-  team: string; // Csapat
-  birthDate: string; // Születési dátum
-  imageUrl: string;
-}
+import { BirthdateFormatPipe } from '../pipes/birthdate-format.pipe';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-drivers',
   standalone: true,
-  imports: [BirthdateFormatPipe,CommonModule],
+  imports: [CommonModule, BirthdateFormatPipe],
   templateUrl: './drivers.component.html',
-  styleUrl: './drivers.component.scss'
+  styleUrls: ['./drivers.component.scss']
 })
-export class DriversComponent {
-  drivers: Driver[] = [
-    {
-      id: 1,
-      name: 'Lewis Hamilton',
-      country: 'United Kingdom',
-      team: 'Mercedes',
-      birthDate: '1985-01-07',
-      imageUrl: 'assets/driverimg/1.png',
-    },
-    {
-      id: 2,
-      name: 'Max Verstappen',
-      country: 'Netherlands',
-      team: 'Red Bull Racing',
-      birthDate: '1997-09-30',
-      imageUrl: 'assets/driverimg/2.png',
-    },
-    {
-      id: 3,
-      name: 'Charles Leclerc',
-      country: 'Monaco',
-      team: 'Ferrari',
-      birthDate: '1997-10-16',
-      imageUrl: 'assets/driverimg/3.png',
-    }
-    // További versenyzők adatai
-  ];
+export class DriversComponent implements OnInit, OnDestroy {
+  drivers: Driver[] = [];
+  private sub?: Subscription;
+
+  constructor(private driverService: DriverService,
+  @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.drivers); // Ellenőrizd a tömb adatainak helyességét
+    if (isPlatformBrowser(this.platformId)) {
+      console.log('DRIVERS INIT');
+      this.loadAllDrivers();
+    }
   }
 
+  ngOnDestroy(): void {
+    if (this.sub) this.sub.unsubscribe();
+  }
+
+  loadAllDrivers(): void {
+    if (this.sub) this.sub.unsubscribe();
+    this.sub = this.driverService.getAllDrivers().subscribe(data => {
+      this.drivers = this.normalizeDrivers(data);
+    });
+  }
+
+  loadDutchDrivers(): void {
+    if (this.sub) this.sub.unsubscribe();
+    this.sub = this.driverService.getDriversByCountry('Netherlands').subscribe(data => {
+      this.drivers = this.normalizeDrivers(data);
+    });
+  }
+
+  loadOrderedByBirthDate(): void {
+    if (this.sub) this.sub.unsubscribe();
+    this.sub = this.driverService.getDriversOrderedByBirthDate().subscribe(data => {
+      this.drivers = this.normalizeDrivers(data);
+    });
+  }
+
+  loadLimitedDrivers(): void {
+    if (this.sub) this.sub.unsubscribe();
+    this.sub = this.driverService.getLimitedDrivers(1).subscribe(data => {
+      this.drivers = this.normalizeDrivers(data);
+    });
+  }
+
+  private normalizeDrivers(data: any[]): Driver[] {
+    return data.map(driver => ({
+      id: driver.id,
+      name: (driver.name || '').replace(/"/g, ''),
+      team: driver.team,
+      country: driver.country,
+      birthDate:driver.birthDate,
+      imageUrl: driver.imageUrl || driver.imageURL || 'assets/default.png'
+    }));
+  }
 }

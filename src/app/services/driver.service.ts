@@ -1,42 +1,43 @@
 import { Injectable } from '@angular/core';
+import { Firestore, collection, collectionData, query, where, orderBy, limit, startAfter, CollectionReference } from '@angular/fire/firestore';
 import { Driver } from '../models/driver';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DriverService {
-  private drivers: Driver[] = [
-    {
-      id: 1,
-      name: 'Lewis Hamilton',
-      teamId: 1,
-      nationality: 'British',
-      dateOfBirth: new Date('1985-01-07'),
-      wins: 103,
-      championships: 7,
-      driverNumber: 44,
-      imageUrl: 'https://example.com/hamilton.jpg'
-    },
-    {
-      id: 2,
-      name: 'Max Verstappen',
-      teamId: 2,
-      nationality: 'Dutch',
-      dateOfBirth: new Date('1997-09-30'),
-      wins: 54,
-      championships: 3,
-      driverNumber: 1,
-      imageUrl: 'https://example.com/verstappen.jpg'
-    }
-  ];
+  private driversCollection: CollectionReference;
 
-  constructor() { }
-
-  getDrivers(): Driver[] {
-    return this.drivers;
+  constructor(private firestore: Firestore) {
+    this.driversCollection = collection(this.firestore, 'Drivers') as CollectionReference;
   }
 
-  getDriverById(id: number): Driver | undefined {
-    return this.drivers.find(driver => driver.id === id);
+  // 1. WHERE lekérdezés
+  getDriversByCountry(country: string): Observable<Driver[]> {
+    const q = query(this.driversCollection, where('country', '==', country));
+    return collectionData(q, { idField: 'id' }) as Observable<Driver[]>;
+  }
+
+  // 2. ORDER BY lekérdezés
+  getDriversOrderedByBirthDate(): Observable<Driver[]> {
+    const q = query(this.driversCollection, orderBy('birthDate', 'asc'));
+    return collectionData(q, { idField: 'id' }) as Observable<Driver[]>;
+  }
+
+  // 3. LIMIT lekérdezés
+  getLimitedDrivers(count: number): Observable<Driver[]> {
+    const q = query(this.driversCollection, limit(count));
+    return collectionData(q, { idField: 'id' }) as Observable<Driver[]>;
+  }
+
+  // 4. LAPOZÁS lekérdezés (ehhez az utolsó dokumentum kell)
+  getDriversPaged(startAfterDoc: any): Observable<Driver[]> {
+    const q = query(this.driversCollection, orderBy('name'), startAfter(startAfterDoc), limit(3));
+    return collectionData(q, { idField: 'id' }) as Observable<Driver[]>;
+  }
+  getAllDrivers(): Observable<Driver[]> {
+    const q = query(this.driversCollection);
+    return collectionData(q, { idField: 'id' }) as Observable<Driver[]>;
   }
 }

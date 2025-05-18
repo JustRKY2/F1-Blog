@@ -1,11 +1,8 @@
 export interface Driver {
-    id: number;
-    name: string;
-    teamId: number;
-    nationality: string;
-    dateOfBirth: Date;
-    wins: number;
-    championships: number;
-    driverNumber: number;
-    imageUrl?: string;
-  }
+  id: string;
+  name: string;
+  country: string;
+  team: string;
+  birthDate: string;
+  imageUrl?: string;
+}
